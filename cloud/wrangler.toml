@@ -1,0 +1,6 @@
+name = "naios-core-status"
+main = "worker.js"
+compatibility_date = "2026-10-01"
+
+[vars]
+SUPABASE_URL = "https://ybvnjabscrinbrgjycgu.supabase.co"
