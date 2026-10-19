@@ -35,3 +35,63 @@ button{transition:box-shadow .2s,transform .2s,background .2s}button:hover{box-s
 .composer{box-shadow:0 0 15px #00aeff6a,inset 0 0 16px #02aaff33}
 @media(max-width:700px){#avatar3d{inset:-3% -14%;width:128%;height:105%}.founder{bottom:12%;min-width:195px;padding:6px 12px}.founder strong{font-size:15px}.logo strong{font-size:23px}}
 @media(prefers-reduced-motion:reduce){.floor-grid{animation:none}}
+
+
+/* ZARK OS / Cinematic Command Center v3 — visual hierarchy */
+:root{--cyan:#16e6ff;--blue:#007dff;--gold:#ffbd60;--green:#12ff9b;--panel:#03101ded;--text:#e7f7ff}
+body{background:#010510;color:#def5ff}
+.cinematic-bg{background:radial-gradient(ellipse at 51% 33%,#15477c70,transparent 42%),radial-gradient(ellipse at 50% 100%,#062d55 0%,#020914 52%,#01050d 100%)}
+.cinematic-bg:after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(125deg,transparent 0 56px,#ffb85d12 57px 59px,transparent 60px 120px),radial-gradient(ellipse at 53% 50%,transparent 0 24%,#ffb65e09 32%,transparent 54%);mask-image:linear-gradient(0deg,#000,transparent 75%)}
+.top{border-bottom:2px solid #3acbff;background:linear-gradient(180deg,#03162cfa,#020815f2);box-shadow:0 0 28px #006bff80,0 2px 0 #b8eaff22}
+.logo strong{font-family:"Arial Black",Impact,sans-serif;font-size:32px;letter-spacing:1px;font-style:italic;color:#f1f7ff;text-shadow:0 0 6px #fff,0 0 18px #1b89ff}
+.logo small{letter-spacing:3px;font-size:12px;color:#69e7ff}
+.logo span{letter-spacing:1.1px;font-size:9px}
+.emblem{background:radial-gradient(circle,#0e9bdb88,#001126 67%);border:3px solid #26d8ff;outline:1px solid #0065ff;outline-offset:5px}
+.topnav button{border-color:#095b91;border-radius:7px 7px 2px 2px;margin:0 2px;background:linear-gradient(#051f39,#010a1b);box-shadow:inset 0 0 9px #08aaff22}
+.topnav button.selected{background:linear-gradient(#1165a5,#02294e);border:1px solid #62eaff;box-shadow:0 0 15px #00baffaa,inset 0 0 17px #18cfff70}
+.hud{clip-path:polygon(0 10px,10px 0,calc(100% - 10px) 0,100% 10px,100% calc(100% - 10px),calc(100% - 10px) 100%,10px 100%,0 calc(100% - 10px));border:1px solid #17b8ff;background:linear-gradient(120deg,#04182bec,#020917ed 70%);box-shadow:0 0 13px #007cff66,inset 0 0 22px #0baaff1b}
+.hud:before,.hud:after{height:3px;background:#b7faff;box-shadow:0 0 14px 2px #00bfff}
+.hud h2{color:#42eaff;font-weight:800;letter-spacing:.5px;text-shadow:0 0 8px #00cfff}
+.sys,.services,.earthpanel{border-left:2px solid #12b9ff}
+.world,.hologram{border-top:2px solid #55dfff}
+.models{border-left:2px solid #8f78ff}
+.activity{border-left:2px solid #1dffa8}
+.vision{border-left:2px solid #ffba55}
+.face{border-top:2px solid #38e5ff}
+.schematic{border-top:2px solid #ffb85e}
+.chat{border:2px solid #1dbfff;box-shadow:0 0 26px #067dff65,inset 0 0 25px #0b85ff20}
+.gauge .dial{background:conic-gradient(#21cfff calc(var(--pct)*1%),#15384e 0);box-shadow:0 0 12px #09baff66,inset 0 0 10px #0c8fff99}
+.gauge .dial:before{background:radial-gradient(circle,#05284b,#020b1a)}
+.gauge .metric-value{font-weight:800;font-size:13px;color:#c6f8ff}
+.gauge>div:last-child{font-weight:700;font-size:13px}
+.wave{font-size:17px;color:#3adfff;letter-spacing:-3px}
+.status-note{margin-top:9px;font-size:10px;color:#8bb3ca;line-height:1.5;border-top:1px solid #145577;padding-top:9px}
+.sys .sparkline{font-size:9px;letter-spacing:1px;color:#72e8ff}
+.service span{color:#7fc5df}
+.service:nth-of-type(4) span{color:#1bffab}
+.world{background:radial-gradient(circle at 50% 52%,#0d7cc266,#011022e8 74%)}
+.globe{background:radial-gradient(circle at 40% 30%,#78dfffaa,#14538c 30%,#011128 65%);box-shadow:0 0 23px #03bfff,0 0 44px #1267ff99,inset 0 0 30px #00aaff}
+#globe3d{filter:drop-shadow(0 0 14px #15aaff)}
+.model{gap:10px}.model strong{font-size:14px}.model small{font-size:10px}.model em{border:1px solid #3b667a;border-radius:14px;padding:5px 7px;background:#091f2c;font-weight:700;font-size:9px;white-space:nowrap}
+.activity>div{color:#b1e9fa}.activity>div:first-of-type{color:#16ffb2}
+.face-art{height:190px;overflow:hidden;background:radial-gradient(circle at center,#0c5e9655,transparent 70%)}
+.face-ring{width:155px;height:155px;border:3px dashed #42e6ff}
+.face-inner{font-size:95px;color:#b3faff;text-shadow:0 0 13px #fff,0 0 35px #0af}
+.face-caption{position:absolute;bottom:9px;font-size:8px;color:#a8f6ff;letter-spacing:1px}
+.vision-row{font-size:11px;font-weight:700;color:#94e9ff}
+.schematic .cubes div{color:#65dfff}
+.center{min-height:605px;background:radial-gradient(ellipse at 50% 45%,#138aff30,transparent 60%);border:none}
+.core-scene{overflow:visible}
+#avatar3d{inset:-12% -23%;width:146%;height:118%;opacity:1;filter:drop-shadow(0 0 12px #0af) drop-shadow(0 0 35px #0a69ff)}
+.reactor{opacity:.6;filter:drop-shadow(0 0 14px #00aeff)}
+.r1,.r2,.r3{border-color:#6bdfff}.r4,.r5{border-color:#1e78ff}
+.holo-beam{height:40%;top:47%;width:200px;opacity:.7}
+.platform{border-color:#7eefff;box-shadow:0 0 20px #3bdfff,0 0 44px #087dff,inset 0 0 28px #0bf}
+.founder{bottom:11%;z-index:8;border:2px solid #f7bd5e;box-shadow:0 0 12px #ffc064,0 0 25px #ffab4a7a,inset 0 0 14px #c98c3155;background:linear-gradient(90deg,#100b0af5,#2e1d0aee,#0c0909f5)}
+.founder strong{font-family:Georgia,serif;color:#ffe1a0;font-size:19px}
+.chat .mic{border:3px solid #83f4ff}
+.chat .composer{border:1px solid #54dfff}
+.chat .bubble{font-size:12px}
+.sound-toggle{background:#071c2e;border:1px solid #4ceaff}
+@media(max-width:1450px){.center{min-height:570px}.logo strong{font-size:25px}.face-art{height:145px}}
+@media(max-width:700px){.center{min-height:395px}#avatar3d{inset:-6% -16%;width:132%;height:109%}.founder{bottom:10%}.topnav button{margin:0 1px}}
