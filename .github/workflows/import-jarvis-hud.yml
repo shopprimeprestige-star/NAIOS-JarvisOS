@@ -1,0 +1,46 @@
+name: Import original JARVIS OS HUD
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/import-jarvis-hud.yml"
+permissions:
+  contents: write
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Fetch exact upstream source
+        run: |
+          git clone --depth 1 https://github.com/porokka/jarvis-os.git /tmp/jarvis-upstream
+          mkdir -p vendor/jarvis-os
+          rsync -a --delete --exclude=.git /tmp/jarvis-upstream/ vendor/jarvis-os/
+          cp /tmp/jarvis-upstream/LICENSE vendor/JARVIS-OS-LICENSE
+      - name: Configure Cloudflare-ready HUD export
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path("vendor/jarvis-os/app/next.config.ts")
+          p.write_text('import type { NextConfig } from "next";\nconst nextConfig: NextConfig = { output: "export", images: { unoptimized: true } };\nexport default nextConfig;\n')
+          PY
+      - name: Install and build original frontend
+        working-directory: vendor/jarvis-os/app
+        run: |
+          npm ci
+          # Exclude server-only API routes from static export, preserving their sources.
+          mv app/api /tmp/jarvis-api-routes
+          npm run build
+          mv /tmp/jarvis-api-routes app/api
+      - name: Commit original source and built frontend
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add vendor/jarvis-os vendor/JARVIS-OS-LICENSE
+          git add -f vendor/jarvis-os/app/out
+          if ! git diff --cached --quiet; then
+            git commit -m "Import original porokka JARVIS OS HUD and static build"
+            git push origin HEAD:${{ github.ref_name }}
+          fi
