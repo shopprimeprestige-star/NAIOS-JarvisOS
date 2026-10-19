@@ -30,12 +30,17 @@ jobs:
         working-directory: vendor/jarvis-os/app
         run: |
           npm ci
-          # Next.js static export cannot compile server-only API routes.\n          # Preserve original routes in Git; exclude them only from static build.\n          mv app/api /tmp/jarvis-api-routes\n          npm run build\n          mv /tmp/jarvis-api-routes app/api
+          # Exclude server-only API routes from static export, preserving their sources.
+          mv app/api /tmp/jarvis-api-routes
+          npm run build
+          mv /tmp/jarvis-api-routes app/api
       - name: Commit original source and built frontend
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add vendor/jarvis-os vendor/JARVIS-OS-LICENSE
           git add -f vendor/jarvis-os/app/out
-          git commit -m "Import original porokka JARVIS OS HUD and static build" || exit 0
-          git push
+          if ! git diff --cached --quiet; then
+            git commit -m "Import original porokka JARVIS OS HUD and static build"
+            git push origin HEAD:${{ github.ref_name }}
+          fi
