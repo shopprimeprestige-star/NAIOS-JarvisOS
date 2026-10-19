@@ -95,3 +95,14 @@ body{background:#010510;color:#def5ff}
 .sound-toggle{background:#071c2e;border:1px solid #4ceaff}
 @media(max-width:1450px){.center{min-height:570px}.logo strong{font-size:25px}.face-art{height:145px}}
 @media(max-width:700px){.center{min-height:395px}#avatar3d{inset:-6% -16%;width:132%;height:109%}.founder{bottom:10%}.topnav button{margin:0 1px}}
+
+
+/* MARK V // full-cinematic armored android */
+.center{background:radial-gradient(ellipse at 50% 41%,#085b9c66 0%,#052a5070 24%,#010a1b88 60%,transparent 80%)}
+.center:before{content:"";position:absolute;inset:2%;pointer-events:none;background:repeating-linear-gradient(90deg,transparent 0 67px,#03a8ff16 68px 69px),radial-gradient(ellipse at 50% 55%,#00c8ff18,transparent 57%);mask-image:linear-gradient(to bottom,transparent,#000 35%,#000 75%,transparent)}
+#avatar3d{inset:-18% -24%;width:148%;height:125%;opacity:1;mix-blend-mode:screen;filter:drop-shadow(0 0 8px #008bff) drop-shadow(0 0 27px #0079ff)}
+.heart{opacity:.06}.reactor{opacity:.32}.r1,.r2,.r3,.r4,.r5{box-shadow:0 0 18px #087dff77,inset 0 0 17px #00aeff33}
+.founder{bottom:9%;background:linear-gradient(100deg,#100c0af8,#281a0bfa,#110d0bfa);backdrop-filter:blur(12px);z-index:12}
+.platform{bottom:6%;border-width:3px;box-shadow:0 0 18px #89efff,0 0 50px #087bff,inset 0 0 26px #00cfff}
+.holo-beam{background:linear-gradient(90deg,transparent,#0abfff18 30%,#8cefff28 50%,#0abfff18 70%,transparent);filter:blur(12px)}
+@media(max-width:700px){#avatar3d{inset:-10% -18%;width:136%;height:114%}}
