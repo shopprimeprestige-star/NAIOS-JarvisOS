@@ -54,6 +54,52 @@ const energyCore=new THREE.Mesh(new THREE.SphereGeometry(.17,32,24),new THREE.Me
 const energyRing=new THREE.Mesh(new THREE.TorusGeometry(.245,.02,8,64),new THREE.MeshBasicMaterial({color:0x45cfff}));energyRing.position.set(0,.05,.67);figure.add(energyRing);
 const shoulderGlow=new THREE.Mesh(new THREE.TorusGeometry(.95,.017,6,100,Math.PI),new THREE.MeshBasicMaterial({color:0x74ecff}));shoulderGlow.rotation.z=Math.PI;shoulderGlow.position.y=.26;shoulderGlow.scale.set(1.22,.45,1);figure.add(shoulderGlow);
 
-avatarEnv.scene.add(figure);const particles=new THREE.BufferGeometry();const coords=[];for(let i=0;i<240;i++){coords.push((Math.random()-.5)*4,(Math.random()-.5)*4,(Math.random()-.5)*2)}particles.setAttribute("position",new THREE.Float32BufferAttribute(coords,3));const cloud=new THREE.Points(particles,new THREE.PointsMaterial({color:cyan,size:.027,transparent:true,opacity:.65}));avatarEnv.scene.add(cloud);let px=0,py=0;window.addEventListener('pointermove',e=>{px=(e.clientX/innerWidth-.5)*2;py=(e.clientY/innerHeight-.5)*2},{passive:true});const animate=t=>{figure.rotation.y=Math.sin(t*.00045)*.22+px*.22;figure.rotation.x=-py*.065;figure.position.y=Math.sin(t*.0012)*.07;core.rotation.y=t*.001;energyRing.rotation.z=t*.0015;energyCore.scale.setScalar(1+Math.sin(t*.003)*.09);halo.rotation.z=t*.0002;cloud.rotation.y=t*.00004;avatarEnv.renderer.render(avatarEnv.scene,avatarEnv.camera);if(!reduced)requestAnimationFrame(animate)};requestAnimationFrame(animate)}
+
+/* ZARK // MARK-V cinematic android armor — custom Three.js geometry, no external assets */
+const metal=new THREE.MeshStandardMaterial({color:0x092744,metalness:.88,roughness:.2,emissive:0x064e89,emissiveIntensity:.33,transparent:true,opacity:.93,side:THREE.DoubleSide});
+const edgeMetal=new THREE.MeshStandardMaterial({color:0x277cbb,metalness:.8,roughness:.16,emissive:0x0878bd,emissiveIntensity:.5,side:THREE.DoubleSide});
+const blackMetal=new THREE.MeshStandardMaterial({color:0x020a16,metalness:.75,roughness:.22,side:THREE.DoubleSide});
+const glowMetal=new THREE.MeshBasicMaterial({color:0x9cf9ff});
+function armorMesh(geo,m,x,y,z,sx=1,sy=1,sz=1){const o=new THREE.Mesh(geo,m);o.position.set(x,y,z);o.scale.set(sx,sy,sz);figure.add(o);return o}
+function armorLine(points,color=0x72e9ff,opacity=.85){facial(points,opacity)}
+const helmet=armorMesh(new THREE.SphereGeometry(.433,64,48),metal,0,1.37,-.06,.94,1.19,.89);
+const crown=armorMesh(new THREE.SphereGeometry(.435,40,20,0,Math.PI*2,0,Math.PI*.35),edgeMetal,0,1.39,-.05,.96,1.19,.91);
+const faceplate=armorMesh(new THREE.SphereGeometry(.37,48,32,0,Math.PI*2,Math.PI*.18,Math.PI*.64),metal,0,1.32,.06,.91,1.16,.96);
+const jawGuard=armorMesh(new THREE.CylinderGeometry(.26,.19,.24,8,1,false),edgeMetal,0,1.00,.15,1,.85,.76);
+const noseGuard=armorMesh(new THREE.ConeGeometry(.075,.26,5),edgeMetal,0,1.28,.39,.78,1,.85);noseGuard.rotation.x=Math.PI;
+for(const sign of [-1,1]){
+  const cheek=armorMesh(new THREE.BoxGeometry(.23,.29,.095),edgeMetal,sign*.245,1.18,.278,.95,1,.85);cheek.rotation.z=sign*.25;
+  const temple=armorMesh(new THREE.BoxGeometry(.11,.26,.19),blackMetal,sign*.345,1.46,.15);temple.rotation.z=sign*.2;
+  const eyebrow=armorMesh(new THREE.BoxGeometry(.29,.055,.10),edgeMetal,sign*.16,1.54,.335);eyebrow.rotation.z=-sign*.18;
+  const eyeSocket=armorMesh(new THREE.BoxGeometry(.205,.072,.05),blackMetal,sign*.155,1.445,.406);eyeSocket.rotation.z=sign*.13;
+  const eyeLight=armorMesh(new THREE.BoxGeometry(.155,.035,.012),glowMetal,sign*.16,1.45,.44);eyeLight.rotation.z=sign*.14;
+  const ear=armorMesh(new THREE.CylinderGeometry(.12,.12,.09,12),edgeMetal,sign*.413,1.32,-.03);ear.rotation.z=Math.PI/2;
+  const earCore=armorMesh(new THREE.CylinderGeometry(.067,.067,.105,12),glowMetal,sign*.46,1.32,-.03);earCore.rotation.z=Math.PI/2;
+  const shoulder=armorMesh(new THREE.SphereGeometry(.43,32,18),metal,sign*.85,.34,-.07,1.4,.56,1.03);shoulder.rotation.z=sign*.2;
+  const shoulderPlate=armorMesh(new THREE.SphereGeometry(.41,32,18,0,Math.PI,0,Math.PI*.8),edgeMetal,sign*.88,.39,.04,1.38,.48,1.03);shoulderPlate.rotation.z=sign*.25;
+  const upperArm=armorMesh(new THREE.CylinderGeometry(.23,.19,.78,16),metal,sign*1.06,-.28,-.04);upperArm.rotation.z=sign*.2;
+  const forearm=armorMesh(new THREE.CylinderGeometry(.20,.14,.58,16),edgeMetal,sign*1.15,-.85,-.03);forearm.rotation.z=sign*.18;
+  const clavicle=armorMesh(new THREE.BoxGeometry(.62,.16,.25),edgeMetal,sign*.39,.39,.45);clavicle.rotation.z=-sign*.2;
+  const pec=armorMesh(new THREE.SphereGeometry(.52,32,20),metal,sign*.43,.02,.28,1,.55,.66);
+  for(let j=0;j<5;j++)armorLine([[sign*(.17+j*.12),.34,.56],[sign*(.23+j*.12),.05,.62],[sign*(.18+j*.11),-.31,.48]],0x54dfff,.5);
+  for(let j=0;j<4;j++)armorLine([[sign*.29,-.36-j*.12,.46],[sign*.68,-.36-j*.12,.35]],0x7eeeff,.5);
+}
+const neckArmor=armorMesh(new THREE.CylinderGeometry(.29,.36,.39,20,2,true),blackMetal,0,.64,-.04);
+for(let j=0;j<5;j++){const neckRing=armorMesh(new THREE.TorusGeometry(.31,.012,6,36),j%2?edgeMetal:glowMetal,0,.5+j*.08,0);neckRing.rotation.x=Math.PI/2}
+const sternum=armorMesh(new THREE.BoxGeometry(.3,.55,.18),edgeMetal,0,-.20,.48);
+const reactorHousing=armorMesh(new THREE.TorusGeometry(.30,.08,12,60),blackMetal,0,.045,.69);
+const reactorBezel=armorMesh(new THREE.TorusGeometry(.235,.025,10,60),edgeMetal,0,.045,.77);
+const reactorGlass=armorMesh(new THREE.CircleGeometry(.18,48),new THREE.MeshBasicMaterial({color:0x94faff,transparent:true,opacity:.94}),0,.045,.786);
+const reactorCross=armorMesh(new THREE.IcosahedronGeometry(.135,2),new THREE.MeshBasicMaterial({color:0xe6ffff,wireframe:true}),0,.045,.81);
+const reactorLight=new THREE.PointLight(0x37cfff,4,3);reactorLight.position.set(0,.05,1.3);figure.add(reactorLight);
+for(let j=0;j<6;j++){const rib=armorMesh(new THREE.BoxGeometry(.74,.08,.13),j%2?metal:edgeMetal,0,-.46-j*.12,.31-j*.025);rib.scale.x=1-j*.07}
+const spine=armorMesh(new THREE.CylinderGeometry(.33,.26,1.1,16,1,true),metal,0,-.30,-.32);
+const helmetOutline=armorMesh(new THREE.TorusGeometry(.44,.013,6,80),glowMetal,0,1.37,-.05,.96,1.18,1);helmetOutline.rotation.y=.1;
+const backRing=armorMesh(new THREE.TorusGeometry(1.7,.023,8,120),edgeMetal,0,.02,-.55);backRing.rotation.y=.24;
+const floatingHalo=armorMesh(new THREE.TorusGeometry(.67,.019,8,100),glowMetal,0,2.06,-.08);floatingHalo.rotation.x=.37;
+const scanBar=armorMesh(new THREE.BoxGeometry(1.15,.012,.03),new THREE.MeshBasicMaterial({color:0x9dfaff,transparent:true,opacity:.65}),0,1.2,.55);
+const fillLight=new THREE.PointLight(0x3dcaff,6,7);fillLight.position.set(-2,2,4);avatarEnv.scene.add(fillLight);
+const rimLight=new THREE.PointLight(0xffc36d,3,6);rimLight.position.set(2,1,-1);avatarEnv.scene.add(rimLight);
+avatarEnv.scene.add(figure);const particles=new THREE.BufferGeometry();const coords=[];for(let i=0;i<240;i++){coords.push((Math.random()-.5)*4,(Math.random()-.5)*4,(Math.random()-.5)*2)}particles.setAttribute("position",new THREE.Float32BufferAttribute(coords,3));const cloud=new THREE.Points(particles,new THREE.PointsMaterial({color:cyan,size:.027,transparent:true,opacity:.65}));avatarEnv.scene.add(cloud);let px=0,py=0;window.addEventListener('pointermove',e=>{px=(e.clientX/innerWidth-.5)*2;py=(e.clientY/innerHeight-.5)*2},{passive:true});const animate=t=>{figure.rotation.y=Math.sin(t*.00045)*.22+px*.22;figure.rotation.x=-py*.065;figure.position.y=Math.sin(t*.0012)*.07;core.rotation.y=t*.001;energyRing.rotation.z=t*.0015;energyCore.scale.setScalar(1+Math.sin(t*.003)*.09);reactorCross.rotation.z=t*.0012;reactorGlass.material.opacity=.78+Math.sin(t*.003)*.18;scanBar.position.y=1.3+Math.sin(t*.0016)*.46;floatingHalo.rotation.z=t*.0003;halo.rotation.z=t*.0002;cloud.rotation.y=t*.00004;avatarEnv.renderer.render(avatarEnv.scene,avatarEnv.camera);if(!reduced)requestAnimationFrame(animate)};requestAnimationFrame(animate)}
 let audio=null,enabled=false;const toggle=document.getElementById("sound-toggle");function chirp(freq=660){if(!enabled)return;try{audio??=new (window.AudioContext||window.webkitAudioContext)();const osc=audio.createOscillator(),gain=audio.createGain();osc.type="sine";osc.frequency.setValueAtTime(freq,audio.currentTime);osc.frequency.exponentialRampToValueAtTime(freq*1.45,audio.currentTime+.08);gain.gain.setValueAtTime(.0001,audio.currentTime);gain.gain.exponentialRampToValueAtTime(.045,audio.currentTime+.015);gain.gain.exponentialRampToValueAtTime(.0001,audio.currentTime+.16);osc.connect(gain).connect(audio.destination);osc.start();osc.stop(audio.currentTime+.17)}catch(e){}}
 toggle?.addEventListener("click",()=>{enabled=!enabled;toggle.textContent=enabled?"♫ AUDIO ON":"♫ AUDIO OFF";toggle.setAttribute("aria-pressed",String(enabled));chirp(900)});document.querySelectorAll("button:not(#sound-toggle)").forEach(b=>b.addEventListener("click",()=>chirp(b.id==="mic"?920:530)));
